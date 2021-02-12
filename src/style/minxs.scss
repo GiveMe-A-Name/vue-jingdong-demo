@@ -1,0 +1,13 @@
+@mixin ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+@mixin textHight($value: .16rem){
+    height: $value;
+    line-height: $value;
+}
+@mixin boxStyle($radius: .08rem) {
+    box-shadow: 0 .02rem 10px  rgba(0,0,0,0.08);
+    border-radius: $radius;
+}
