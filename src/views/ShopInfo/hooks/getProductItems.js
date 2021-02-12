@@ -1,11 +1,29 @@
-import { ref } from 'vue'
+import { reactive } from 'vue'
 import { get } from '@/utils/request.js'
-const getProductItem = () => {
-  const productItems = ref(null)
-  get('/api/shop/1/products').then(
+import { useStore } from 'vuex'
+
+const getProductItem = (storeId) => {
+  const store = useStore()
+  const data = reactive({
+    productItems: null
+  })
+  data.productItems = store.state.storeProductItems.find(item => {
+    return item._id === storeId
+  })
+  if (data.productItems) {
+    data.productItems = data.productItems?.productItems
+    return {
+      data
+    }
+  }
+  get(`/api/shop/${storeId}/products`).then(
     response => {
       if (response?.data?.errno === 0) {
-        productItems.value = response?.data?.data
+        data.productItems = response?.data?.data
+        store.commit('setStoreProductItems', {
+          _id: storeId,
+          productItems: response?.data?.data
+        })
       } else {
         throw new Error(response?.data?.message)
       }
@@ -15,6 +33,6 @@ const getProductItem = () => {
       console.log(error)
     }
   )
-  return { productItems }
+  return { data }
 }
 export default getProductItem

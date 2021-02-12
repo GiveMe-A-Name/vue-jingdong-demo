@@ -14,16 +14,16 @@
       <ul class="detail__tabs">
         <li
           v-for="(text,index) in tabsText"
-          :key="text"
+          :key="text.tag"
           class="detail__tabs__item"
           :class="{'detail__tabs__item__active': tabsAcitveId === index}"
           @click="handleTabs(index)"
         >
-          {{text}}
+          {{text.name}}
         </li>
       </ul>
       <div class="detail__products">
-        <product-item v-for="product in productItems" :key="product._id" :productInfo="product" />
+        <product-item v-for="product in currentProductItems" :key="product._id" :productInfo="product" />
       </div>
     </div>
     <div class="shopinfo__docker">
@@ -37,9 +37,9 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import NearbyItem from '@/components/Public/NearbyItem.vue'
-import ProductItem from './components/ProductItem.vue'
+import ProductItem from './components/ProductItem'
 import getNearByItem from './hooks/getNearByItem'
 import useGoback from './hooks/useGoback'
 import getProductItems from './hooks/getProductItems'
@@ -58,25 +58,38 @@ export default {
   setup(props) {
     const { nearbyItem } = getNearByItem(props._id)
     const { goBack } = useGoback()
-    const { productItems } = getProductItems()
+    const productItems = getProductItems('1').data.productItems
     const tabsText = reactive([
-      '全部商品',
-      '秒杀',
-      '休闲水果',
-      '时令蔬菜',
-      '肉蛋家禽'
+      { name: '全部商品', tag: 'all' },
+      { name: '秒杀', tag: 'seckill' },
+      { name: '休闲水果', tag: 'fruit' },
+      { name: '时令蔬菜', tag: 'vegetables' },
+      { name: '肉蛋家禽', tag: 'meats' }
     ])
     const tabsAcitveId = ref(0)
     const handleTabs = (index) => {
       tabsAcitveId.value = index
     }
+    const currentProductItems = computed(() => {
+      const tag = tabsText[tabsAcitveId.value].tag
+      if (tag === 'all') {
+        return productItems
+      }
+      return productItems.reduce((preArr, curItem) => {
+        if (curItem.tag === tag) {
+          preArr.push(curItem)
+        }
+        return preArr
+      }, [])
+    })
     return {
       nearbyItem,
       goBack,
       productItems,
       tabsText,
       tabsAcitveId,
-      handleTabs
+      handleTabs,
+      currentProductItems
     }
   }
 }

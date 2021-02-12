@@ -4,11 +4,11 @@
   </div>
 </template>
 <script>
-import useLocalStorage from './hooks/useLocalStorage'
+import useSessiontorage from './hooks/useSessiontorage'
 export default {
   name: 'App',
   setup() {
-    useLocalStorage()
+    useSessiontorage()
   }
 }
 </script>

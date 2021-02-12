@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 const useCount = () => {
-  const count = ref(1)
+  const count = ref(0)
   const handleSub = () => {
     count.value--
   }
