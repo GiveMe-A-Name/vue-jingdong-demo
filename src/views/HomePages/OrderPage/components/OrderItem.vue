@@ -31,6 +31,7 @@ export default {
   background-color: #ffffff;
   padding: .16rem;
   margin-top: .16rem;
+  border-radius: .04rem;
   &__title {
     display: flex;
     justify-content: space-between;

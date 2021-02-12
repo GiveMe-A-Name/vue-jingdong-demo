@@ -26,9 +26,10 @@ export default {
 <style lang="scss" scoped>
 @import '@/style/minxs.scss';
 .car__item {
+  background-color: #fff;
   margin: 0.16rem .18rem 0 .18rem;
   padding: .16rem;
-  background-color: #fff;
+  border-radius: .04rem;
   &__storeName {
     font-size: 0.16rem;
     font-weight: 600;

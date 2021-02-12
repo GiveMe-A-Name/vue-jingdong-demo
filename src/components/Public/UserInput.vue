@@ -35,6 +35,7 @@ export default {
   text-align: left;
   box-sizing: border-box;
   padding: 0.12rem 0.16rem;
+  border-radius: .06rem;
   &__item {
     width: 100%;
     font-size: 0.16rem;

@@ -75,7 +75,7 @@ export default {
   top: 0;
   bottom: 0.5rem;
   right: 0;
-  padding: 0 0.18rem;
+  // padding: 0 0.18rem;
   overflow: auto;
   .position {
     color: $content-fontcolor;
@@ -83,6 +83,7 @@ export default {
     line-height: 0.22rem;
     height: 0.22rem;
     font-size: 0.16rem;
+    margin: 0 .18rem 0 .18rem;
     @include ellipsis;
     padding: 0.16rem 0.24rem 0.16rem 0;
     &__icon {
@@ -95,10 +96,12 @@ export default {
     }
   }
   .search {
+    margin: 0 .18rem 0 .18rem;
     height: 0.32rem;
     background: #f5f5f5;
     padding: 0.08rem 0.16rem;
     box-sizing: border-box;
+    border-radius: .16rem;
     &__icon {
       font-size: 0.15rem;
       margin: 0 0.12rem 0.16rem;
@@ -112,8 +115,8 @@ export default {
     }
   }
   .banner {
-    margin-top: 0.12rem;
     height: 0.86rem;
+    margin: .12rem .18rem 0 .18rem;
     &__img {
       width: 100%;
       height: inherit;
@@ -122,7 +125,7 @@ export default {
   .icons {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 0.16rem;
+    margin: 0.16rem .18rem 0 .18rem;
   }
   .gap {
     background-color: #f1f1f1;
@@ -132,6 +135,7 @@ export default {
   }
   .nearby {
     color: $content-fontcolor;
+    margin: 0 .18rem 0 .18rem;
     &__title {
       font-size: 0.18rem;
       height: 0.25rem;
