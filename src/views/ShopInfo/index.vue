@@ -27,12 +27,13 @@
       </div>
     </div>
     <div class="shopinfo__docker">
-      <img src="@/assets/basket.svg" class="shopinfo__docker__img" alt="">
+      <img @click="handleClick" src="@/assets/basket.svg" class="shopinfo__docker__img" alt="">
       <div class="shopinfo__docker__content">
         <span class="content__title">购物车是空的</span>
       </div>
       <button class="shopinfo__docker__btn">去结算</button>
     </div>
+    <CurrentCar v-if="currentCarFlag" />
   </div>
 </template>
 
@@ -40,6 +41,7 @@
 import { computed, reactive, ref, toRefs } from 'vue'
 import NearbyItem from '@/components/Public/NearbyItem.vue'
 import ProductItem from './components/ProductItem'
+import CurrentCar from './components/CurrentShoppingCar'
 import getNearByItem from './hooks/getNearByItem'
 import useGoback from './hooks/useGoback'
 import getProductItems from './hooks/getProductItems'
@@ -53,7 +55,8 @@ export default {
   },
   components: {
     NearbyItem,
-    ProductItem
+    ProductItem,
+    CurrentCar
   },
   setup(props) {
     const { nearbyItem } = getNearByItem(props._id)
@@ -83,6 +86,10 @@ export default {
         return preArr
       }, [])
     })
+    const currentCarFlag = ref(false)
+    const handleClick = () => {
+      currentCarFlag.value = !currentCarFlag.value
+    }
     return {
       nearbyItem,
       goBack,
@@ -90,7 +97,9 @@ export default {
       tabsText,
       tabsAcitveId,
       handleTabs,
-      currentProductItems
+      currentProductItems,
+      currentCarFlag,
+      handleClick
     }
   }
 }
@@ -112,12 +121,12 @@ export default {
     margin: 0.16rem 0.18rem;
     height: .32rem;
     &__back {
-      @include textHight(0.32rem);
+      @include textHeight(0.32rem);
       color: #b6b6b6;
       font-size: 0.22rem;
     }
     &__container {
-      @include textHight(0.32rem);
+      @include textHeight(0.32rem);
       width: 100%;
       margin-left: 0.16rem;
       border-radius: 0.16rem;
