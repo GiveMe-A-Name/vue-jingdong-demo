@@ -63,7 +63,7 @@ export default {
   &__title {
     background-color: #fff;
     &__text {
-      @include textHeight(.44rem);
+      @include textHight(.44rem);
       font-size: 0.16rem;
       text-align: center;
       margin: 0;

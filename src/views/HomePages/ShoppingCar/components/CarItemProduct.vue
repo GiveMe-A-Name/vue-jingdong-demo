@@ -47,10 +47,10 @@ export default {
       justify-content: space-between;
       &__number {
         color: #e93b3b;
-        @include textHeight(0.2rem);
+        @include textHight(0.2rem);
       }
       &__total {
-        @include textHeight(0.2rem);
+        @include textHight(0.2rem);
       }
     }
   }

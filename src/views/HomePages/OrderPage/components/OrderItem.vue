@@ -59,7 +59,7 @@ export default {
       &__price{
         color: #E93B3B;
         font-size: .14rem;
-        @include textHeight(.2rem);
+        @include textHight(.2rem);
       }
       &__amount{
         color: #333333;

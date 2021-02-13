@@ -13,7 +13,7 @@ export default createStore({
       if (typeof payload !== 'object') {
         return
       }
-      for (const key in payload) {
+      for (const key in state) {
         state[key] = payload[key]
       }
     },
@@ -22,24 +22,6 @@ export default createStore({
     },
     setStoreProductItems(state, productItem) {
       state.storeProductItems.push(productItem)
-    },
-    hanldeAddProductCount(state, payload) {
-      const { storeId, ProductId, handleType } = payload
-      const storeProducts = state.storeProductItems.find(item => {
-        return item._id === storeId
-      }).productItems
-      const product = storeProducts.find((item) => {
-        return item._id === ProductId
-      })
-      switch (handleType) {
-        case 'Add':
-          product.count++
-          break
-        case 'Sub':
-          product.count--
-          break
-        default:
-      }
     }
   },
   getters: {
