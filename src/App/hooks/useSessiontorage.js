@@ -21,7 +21,7 @@ const useGetState = () => {
   const getVuxStateFromSessionStorage = () => {
     store.commit(
       'setVuxStateFromSessionStorage',
-      JSON.parse(sessionStorage.getItem('vuexState') || {})
+      JSON.parse((sessionStorage.getItem('vuexState') || '0'))
     )
   }
   return { getVuxStateFromSessionStorage }

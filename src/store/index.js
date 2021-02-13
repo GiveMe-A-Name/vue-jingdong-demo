@@ -10,6 +10,9 @@ export default createStore({
       state.nearbyStoreLists = payload
     },
     setVuxStateFromSessionStorage(state, payload) {
+      if (typeof payload !== 'object') {
+        return
+      }
       for (const key in state) {
         state[key] = payload[key]
       }
