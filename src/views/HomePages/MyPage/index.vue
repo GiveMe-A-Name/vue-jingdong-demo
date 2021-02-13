@@ -77,7 +77,7 @@ export default {
       font-size: 0.24rem;
       padding-top: 0.59rem;
       color: #262628;
-      @include textHight(.36rem);
+      @include textHeight(.36rem);
     }
     &__ID {
       color: #c1c0c9;

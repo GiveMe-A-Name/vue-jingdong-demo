@@ -40,10 +40,10 @@ export default {
     text-align: center;
     font-size: 0.14rem;
     margin: 0.16rem 0;
-    @include textHight(.28rem);
+    @include textHeight(.28rem);
     .iconfont {
       display: inline-block;
-      @include textHight(0.07rem);
+      @include textHeight(0.07rem);
     }
   }
 }

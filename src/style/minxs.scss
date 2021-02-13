@@ -3,7 +3,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-@mixin textHight($value: .16rem){
+@mixin textHeight($value: .16rem){
     height: $value;
     line-height: $value;
 }

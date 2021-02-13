@@ -19,10 +19,15 @@ const getProductItem = (storeId) => {
   get(`/api/shop/${storeId}/products`).then(
     response => {
       if (response?.data?.errno === 0) {
-        data.productItems = response?.data?.data
+        // 添加购物车功能，把每个商品都加一个count=0字段
+        const resData = [...response?.data?.data]
+        for (const item of resData) {
+          item.count = 0
+        }
+        data.productItems = resData
         store.commit('setStoreProductItems', {
           _id: storeId,
-          productItems: response?.data?.data
+          productItems: resData
         })
       } else {
         throw new Error(response?.data?.message)

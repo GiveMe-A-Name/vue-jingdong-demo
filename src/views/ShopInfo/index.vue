@@ -23,9 +23,15 @@
         </li>
       </ul>
       <div class="detail__products">
-        <product-item v-for="product in currentProductItems" :key="product._id" :productInfo="product" />
+        <product-item
+          v-for="product in currentProductItems"
+          :key="product._id"
+          :productInfo="product"
+          currentStoreId="1"
+        />
       </div>
     </div>
+    <car />
     <div class="shopinfo__docker">
       <img src="@/assets/basket.svg" class="shopinfo__docker__img" alt="">
       <div class="shopinfo__docker__content">
@@ -43,6 +49,7 @@ import ProductItem from './components/ProductItem'
 import getNearByItem from './hooks/getNearByItem'
 import useGoback from './hooks/useGoback'
 import getProductItems from './hooks/getProductItems'
+import Car from './components/CurrentShoppingCar'
 export default {
   name: 'ShopInfo',
   props: {
@@ -53,7 +60,8 @@ export default {
   },
   components: {
     NearbyItem,
-    ProductItem
+    ProductItem,
+    Car
   },
   setup(props) {
     const { nearbyItem } = getNearByItem(props._id)
@@ -111,12 +119,12 @@ export default {
     margin: 0.16rem 0.18rem;
     height: .32rem;
     &__back {
-      @include textHight(0.32rem);
+      @include textHeight(0.32rem);
       color: #b6b6b6;
       font-size: 0.22rem;
     }
     &__container {
-      @include textHight(0.32rem);
+      @include textHeight(0.32rem);
       width: 100%;
       margin-left: 0.16rem;
       border-radius: 0.16rem;
@@ -172,8 +180,7 @@ export default {
     background-color: #FFFFFF;
     bottom: 0;
     width: 100%;
-    height: .49rem;
-    line-height: .49rem;
+    @include textHeight(.49rem);
     &__img{
       margin: 0 .32rem 0 .24rem;
     }
