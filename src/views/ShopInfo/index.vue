@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, toRefs } from 'vue'
 import NearbyItem from '@/components/Public/NearbyItem.vue'
 import ProductItem from './components/ProductItem'
 import getNearByItem from './hooks/getNearByItem'
@@ -58,7 +58,8 @@ export default {
   setup(props) {
     const { nearbyItem } = getNearByItem(props._id)
     const { goBack } = useGoback()
-    const productItems = getProductItems('1').data.productItems
+    // 使用toRefs从reactive对象中解构出来
+    const { productItems } = toRefs(getProductItems('1').data)
     const tabsText = reactive([
       { name: '全部商品', tag: 'all' },
       { name: '秒杀', tag: 'seckill' },
@@ -73,9 +74,9 @@ export default {
     const currentProductItems = computed(() => {
       const tag = tabsText[tabsAcitveId.value].tag
       if (tag === 'all') {
-        return productItems
+        return productItems.value
       }
-      return productItems.reduce((preArr, curItem) => {
+      return productItems.value.reduce((preArr, curItem) => {
         if (curItem.tag === tag) {
           preArr.push(curItem)
         }

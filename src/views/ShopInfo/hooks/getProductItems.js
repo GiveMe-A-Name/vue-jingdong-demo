@@ -7,6 +7,7 @@ const getProductItem = (storeId) => {
   const data = reactive({
     productItems: null
   })
+  // 从store中取出具体商店的商品列表
   data.productItems = store.state.storeProductItems.find(item => {
     return item._id === storeId
   })
@@ -16,6 +17,7 @@ const getProductItem = (storeId) => {
       data
     }
   }
+  // 如果暂时没有该商店的的数据，就从后端请求，
   get(`/api/shop/${storeId}/products`).then(
     response => {
       if (response?.data?.errno === 0) {
