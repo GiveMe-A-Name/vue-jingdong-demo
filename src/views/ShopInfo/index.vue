@@ -34,7 +34,11 @@
     <div class="shopinfo__docker">
       <img @click="handleShowCar" src="@/assets/basket.svg" class="shopinfo__docker__img" alt="">
       <div class="shopinfo__docker__content">
-        <span class="content__title">购物车是空的</span>
+        <span class="content__title" v-if="totallyMoney == 0">购物车是空的</span>
+        <div v-else>
+          <span class="content__title">总结&nbsp;:</span>
+          <span class="content__total">¥{{totallyMoney}}</span>
+        </div>
       </div>
       <button class="shopinfo__docker__btn">去结算</button>
     </div>
@@ -43,7 +47,7 @@
 </template>
 
 <script>
-import { provide } from 'vue'
+import { computed, provide } from 'vue'
 import NearbyItem from '@/components/Public/NearbyItem.vue'
 import ProductItem from './components/ProductItem'
 import CurrentCar from './components/CurrentShoppingCar'
@@ -66,18 +70,32 @@ export default {
     CurrentCar
   },
   setup(props) {
+    // 1/ 在该页面组件，provide商店ID
+    provide('storeId', props._id)
+    // 2.获得当前商铺信息
     const { nearbyItem } = getNearByItem(props._id)
+    // 3. 后退功能
     const { goBack } = useGoback()
-    // 当前活动的tabs
+    // 4. 当前活动的tabs
     const { tabsAcitveId, handleTabs, tabsText } = useTabs()
-    // 通过筛选的当前商品列表
+    // 5. 通过筛选的当前商品列表
     const { currentProductItems, productItems } = getProductItems({
       tabsText,
       tabsAcitveId
     })
+    // 6. 控制要不要显示购物车蒙层
     const { showShoppingCar, handleShowCar } = useShowCar()
-    // 在该页面组件，provide商店ID
-    provide('storeId', props._id)
+    // 7. 获得当前商品总金额
+    const totallyMoney = computed(() => {
+      // 在首次加载的时候，需要想后台请求数据。第一次拿到的productItems.value是undefined
+      if (productItems.value) {
+        return productItems.value.reduce((preNum, nextItem) => {
+          return preNum + nextItem.count * nextItem.price
+        }, 0).toFixed(2)
+      } else {
+        return 0
+      }
+    })
     return {
       nearbyItem, // 该商店
       goBack, // 后退按钮
@@ -87,7 +105,8 @@ export default {
       currentProductItems,
       showShoppingCar,
       handleShowCar,
-      productItems
+      productItems,
+      totallyMoney
     }
   }
 }
@@ -177,6 +196,17 @@ export default {
     }
     &__content{
       width: 100%;
+      .content__title{
+        font-family: PingFangSC-Regular;
+        font-size: .14rem;
+        color: #333333;
+      }
+      .content__total{
+        font-size: .18rem;
+        font-weight: 600;
+        color: #E93B3B;
+        margin-left: .05rem;
+      }
     }
     &__btn{
       width: 1.79rem;

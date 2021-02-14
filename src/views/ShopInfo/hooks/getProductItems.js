@@ -25,6 +25,7 @@ const getProductItemLists = (storeId) => {
         for (const item of Data) {
           item.count = 0
         }
+        // 由于要从后端请求，在该页面首次加载的时候，这个页面数据是没有的
         data.productItems = Data
         store.commit('setStoreProductItems', {
           _id: storeId,
