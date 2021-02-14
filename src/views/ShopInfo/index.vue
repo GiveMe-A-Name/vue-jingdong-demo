@@ -27,24 +27,25 @@
       </div>
     </div>
     <div class="shopinfo__docker">
-      <img @click="handleClick" src="@/assets/basket.svg" class="shopinfo__docker__img" alt="">
+      <img @click="handleShowCar" src="@/assets/basket.svg" class="shopinfo__docker__img" alt="">
       <div class="shopinfo__docker__content">
         <span class="content__title">购物车是空的</span>
       </div>
       <button class="shopinfo__docker__btn">去结算</button>
     </div>
-    <CurrentCar v-if="currentCarFlag" />
+    <CurrentCar v-if="showShoppingCar" />
   </div>
 </template>
 
 <script>
-import { computed, reactive, ref, toRefs } from 'vue'
 import NearbyItem from '@/components/Public/NearbyItem.vue'
 import ProductItem from './components/ProductItem'
 import CurrentCar from './components/CurrentShoppingCar'
 import getNearByItem from './hooks/getNearByItem'
 import useGoback from './hooks/useGoback'
-import getProductItems from './hooks/getProductItems'
+import useTabs from './hooks/useTabs.js'
+import getCurrentProductItems from './hooks/getCurrentProductItems.js'
+import useShowCar from './hooks/useShowCar.js'
 export default {
   name: 'ShopInfo',
   props: {
@@ -61,45 +62,23 @@ export default {
   setup(props) {
     const { nearbyItem } = getNearByItem(props._id)
     const { goBack } = useGoback()
-    // 使用toRefs从reactive对象中解构出来
-    const { productItems } = toRefs(getProductItems('1').data)
-    const tabsText = reactive([
-      { name: '全部商品', tag: 'all' },
-      { name: '秒杀', tag: 'seckill' },
-      { name: '休闲水果', tag: 'fruit' },
-      { name: '时令蔬菜', tag: 'vegetables' },
-      { name: '肉蛋家禽', tag: 'meats' }
-    ])
-    const tabsAcitveId = ref(0)
-    const handleTabs = (index) => {
-      tabsAcitveId.value = index
-    }
-    const currentProductItems = computed(() => {
-      const tag = tabsText[tabsAcitveId.value].tag
-      if (tag === 'all') {
-        return productItems.value
-      }
-      return productItems.value.reduce((preArr, curItem) => {
-        if (curItem.tag === tag) {
-          preArr.push(curItem)
-        }
-        return preArr
-      }, [])
-    })
-    const currentCarFlag = ref(false)
-    const handleClick = () => {
-      currentCarFlag.value = !currentCarFlag.value
-    }
-    return {
-      nearbyItem,
-      goBack,
-      productItems,
+    // 当前活动的tabs
+    const { tabsAcitveId, handleTabs, tabsText } = useTabs()
+    // 通过筛选的当前商品列表
+    const { currentProductItems } = getCurrentProductItems({
       tabsText,
+      tabsAcitveId
+    })
+    const { showShoppingCar, handleShowCar } = useShowCar()
+    return {
+      nearbyItem, // 该商店
+      goBack, // 后退按钮
+      tabsText, //
       tabsAcitveId,
       handleTabs,
       currentProductItems,
-      currentCarFlag,
-      handleClick
+      showShoppingCar,
+      handleShowCar
     }
   }
 }
