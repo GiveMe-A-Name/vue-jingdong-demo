@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import CarItem from './components/CarItem.vue'
 export default {
   name: 'CurrentShoppingCar',
@@ -36,9 +37,9 @@ export default {
     }
   },
   setup(props) {
-    const filterItems = props.productItems.filter(item => {
+    const filterItems = computed(() => props.productItems.filter(item => {
       return item.count > 0
-    })
+    }))
     return {
       filterItems
     }

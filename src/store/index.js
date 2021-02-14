@@ -22,6 +22,27 @@ export default createStore({
     },
     setStoreProductItems(state, productItem) {
       state.storeProductItems.push(productItem)
+    },
+    hanleProductCount(state, { storeId, productId, handleType }) {
+      // 获得商店列表
+      const { storeProductItems } = state
+      // 当前商店
+      const currentStore = storeProductItems.find(item => {
+        return item._id === storeId
+      })
+      // 从当前商店的列表中，找到当前商品
+      const currentProduct = currentStore.productItems.find(item => {
+        return item._id === productId
+      })
+      switch (handleType) {
+        case 'add':
+          currentProduct.count++
+          break
+        case 'sub':
+          currentProduct.count--
+          break
+        default:
+      }
     }
   },
   getters: {

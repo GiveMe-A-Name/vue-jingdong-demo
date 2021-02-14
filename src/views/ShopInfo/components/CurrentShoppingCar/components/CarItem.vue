@@ -13,21 +13,48 @@
         </div>
       </div>
       <div class="count">
-        <button class="count__handlesub">-</button>
+        <button
+          class="count__handlesub"
+          @click="handleSub"
+        >-</button>
         <span class="count__number">{{item.count}}</span>
-        <button class="count__handleadd">+</button>
+        <button class="count__handleadd" @click="handleAdd">+</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { inject } from 'vue'
+import { useStore } from 'vuex'
 export default {
   name: 'CarItem',
   props: {
     item: {
       type: Object,
       require: true
+    }
+  },
+  setup(props) {
+    const store = useStore()
+    const storeId = inject('storeId')
+    const handleSub = () => {
+      store.commit('hanleProductCount', {
+        storeId,
+        productId: props.item._id,
+        handleType: 'sub'
+      })
+    }
+    const handleAdd = () => {
+      store.commit('hanleProductCount', {
+        storeId,
+        productId: props.item._id,
+        handleType: 'add'
+      })
+    }
+    return {
+      handleSub,
+      handleAdd
     }
   }
 }

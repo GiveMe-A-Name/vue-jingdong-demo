@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { provide } from 'vue'
 import NearbyItem from '@/components/Public/NearbyItem.vue'
 import ProductItem from './components/ProductItem'
 import CurrentCar from './components/CurrentShoppingCar'
@@ -75,12 +76,14 @@ export default {
       tabsAcitveId
     })
     const { showShoppingCar, handleShowCar } = useShowCar()
+    // 在该页面组件，provide商店ID
+    provide('storeId', props._id)
     return {
       nearbyItem, // 该商店
       goBack, // 后退按钮
-      tabsText, //
-      tabsAcitveId,
-      handleTabs,
+      tabsText, // tabs列表
+      tabsAcitveId, // 当前激活的tabs
+      handleTabs, // 改变当前激活的tabs
       currentProductItems,
       showShoppingCar,
       handleShowCar,
