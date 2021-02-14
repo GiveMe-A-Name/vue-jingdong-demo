@@ -1,14 +1,22 @@
-import { ref } from 'vue'
-const useCount = () => {
-  const count = ref(0)
+import { reactive } from 'vue'
+import { useStore } from 'vuex'
+const useCount = ({ storeId, productId }) => {
+  const { storeProductItems } = useStore().state
+  // 当前商店
+  const currentStore = storeProductItems.find(item => {
+    return item._id === storeId
+  })
+  // 从当前商店的列表中，找到当前商品
+  const currentProduct = reactive(currentStore.productItems.find(item => {
+    return item._id === productId
+  }))
   const handleSub = () => {
-    count.value--
+    currentProduct.count--
   }
   const handleAdd = () => {
-    count.value++
+    currentProduct.count++
   }
   return {
-    count,
     handleSub,
     handleAdd
   }

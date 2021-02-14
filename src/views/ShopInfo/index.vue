@@ -23,7 +23,12 @@
         </li>
       </ul>
       <div class="detail__products">
-        <product-item v-for="product in currentProductItems" :key="product._id" :productInfo="product" />
+        <product-item
+          v-for="product in currentProductItems"
+          :key="product._id"
+          :productInfo="product"
+          currentStoreId="1"
+        />
       </div>
     </div>
     <div class="shopinfo__docker">

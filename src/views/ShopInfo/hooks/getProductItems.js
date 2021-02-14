@@ -21,10 +21,14 @@ const getProductItem = (storeId) => {
   get(`/api/shop/${storeId}/products`).then(
     response => {
       if (response?.data?.errno === 0) {
-        data.productItems = response?.data?.data
+        const Data = response?.data?.data
+        for (const item of Data) {
+          item.count = 0
+        }
+        data.productItems = Data
         store.commit('setStoreProductItems', {
           _id: storeId,
-          productItems: response?.data?.data
+          productItems: Data
         })
       } else {
         throw new Error(response?.data?.message)

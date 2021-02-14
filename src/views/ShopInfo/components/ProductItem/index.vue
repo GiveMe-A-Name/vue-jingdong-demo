@@ -13,10 +13,10 @@
                 <div class="detail__count">
                     <button
                         class="detail__count__sub"
-                        v-if="count > 0"
+                        v-if="productInfo.count > 0"
                         @click="handleSub"
                     >-</button>
-                    <span class="count" v-if="count > 0">{{count}}</span>
+                    <span class="count" v-if="productInfo.count > 0">{{productInfo.count}}</span>
                     <button class="detail__count__add" @click="handleAdd">+</button>
                 </div>
             </div>
@@ -34,12 +34,15 @@ export default {
     productInfo: {
       type: Object,
       require: true
+    },
+    currentStoreId: {
+      type: String,
+      require: true
     }
   },
-  setup() {
-    const { count, handleSub, handleAdd } = useCount()
+  setup(props) {
+    const { handleSub, handleAdd } = useCount({ storeId: props.currentStoreId, productId: props.productInfo._id })
     return {
-      count,
       handleSub,
       handleAdd
     }
