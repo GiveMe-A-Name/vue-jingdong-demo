@@ -38,7 +38,7 @@
       </div>
       <button class="shopinfo__docker__btn">去结算</button>
     </div>
-    <CurrentCar v-if="showShoppingCar" />
+    <CurrentCar v-if="showShoppingCar" :productItems="productItems"   />
   </div>
 </template>
 
@@ -49,7 +49,7 @@ import CurrentCar from './components/CurrentShoppingCar'
 import getNearByItem from './hooks/getNearByItem'
 import useGoback from './hooks/useGoback'
 import useTabs from './hooks/useTabs.js'
-import getCurrentProductItems from './hooks/getCurrentProductItems.js'
+import getProductItems from './hooks/getProductItems.js'
 import useShowCar from './hooks/useShowCar.js'
 export default {
   name: 'ShopInfo',
@@ -70,7 +70,7 @@ export default {
     // 当前活动的tabs
     const { tabsAcitveId, handleTabs, tabsText } = useTabs()
     // 通过筛选的当前商品列表
-    const { currentProductItems } = getCurrentProductItems({
+    const { currentProductItems, productItems } = getProductItems({
       tabsText,
       tabsAcitveId
     })
@@ -83,7 +83,8 @@ export default {
       handleTabs,
       currentProductItems,
       showShoppingCar,
-      handleShowCar
+      handleShowCar,
+      productItems
     }
   }
 }

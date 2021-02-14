@@ -6,15 +6,15 @@
     <div class="caritem__content">
       <img src="@/assets/番茄.jpg" alt="" class="caritem__content__img">
       <div class="text">
-        <h5 class="text__name">番茄250g/份</h5>
+        <h5 class="text__name">{{item.name}}</h5>
         <div class="text__price">
-          <span class="text__price__new">¥33.6</span>
-          <span class="text__price__old">¥33.6</span>
+          <span class="text__price__new">¥{{item.price}}</span>
+          <span class="text__price__old">¥{{item.oldPrice}}</span>
         </div>
       </div>
       <div class="count">
         <button class="count__handlesub">-</button>
-        <span class="count__number">1</span>
+        <span class="count__number">{{item.count}}</span>
         <button class="count__handleadd">+</button>
       </div>
     </div>
@@ -23,7 +23,13 @@
 
 <script>
 export default {
-  name: 'CarItem'
+  name: 'CarItem',
+  props: {
+    item: {
+      type: Object,
+      require: true
+    }
+  }
 }
 </script>
 
@@ -31,7 +37,6 @@ export default {
 @import '@/style/minxs.scss';
 .caritem{
   display: flex;
-
   &__checkbox {
     padding: .12rem 0;
     &__check{

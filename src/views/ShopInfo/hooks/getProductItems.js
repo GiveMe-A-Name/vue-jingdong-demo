@@ -1,8 +1,8 @@
-import { reactive } from 'vue'
-import { get } from '@/utils/request.js'
+import { toRefs, computed, reactive } from 'vue'
 import { useStore } from 'vuex'
+import { get } from '@/utils/request.js'
 
-const getProductItem = (storeId) => {
+const getProductItemLists = (storeId) => {
   const store = useStore()
   const data = reactive({
     productItems: null
@@ -41,4 +41,24 @@ const getProductItem = (storeId) => {
   )
   return { data }
 }
-export default getProductItem
+
+const getProductItems = ({ tabsText, tabsAcitveId }) => {
+  const { productItems } = toRefs(getProductItemLists('1').data)
+  const currentProductItems = computed(() => {
+    const tag = tabsText[tabsAcitveId.value].tag
+    if (tag === 'all') {
+      return productItems.value
+    }
+    return productItems.value.reduce((preArr, curItem) => {
+      if (curItem.tag === tag) {
+        preArr.push(curItem)
+      }
+      return preArr
+    }, [])
+  })
+  return {
+    currentProductItems,
+    productItems
+  }
+}
+export default getProductItems

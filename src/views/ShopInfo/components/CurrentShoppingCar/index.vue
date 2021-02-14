@@ -11,9 +11,12 @@
         </div>
       </header>
       <article class="car__items">
-        <CarItem class="car__item"/>
-        <CarItem class="car__item"/>
-        <CarItem class="car__item"/>
+        <CarItem
+          v-for="item in filterItems"
+          :item="item"
+          :key="item._id"
+          class="car__item"
+        />
       </article>
     </section>
   </div>
@@ -25,6 +28,20 @@ export default {
   name: 'CurrentShoppingCar',
   components: {
     CarItem
+  },
+  props: {
+    productItems: {
+      type: Object,
+      require: true
+    }
+  },
+  setup(props) {
+    const filterItems = props.productItems.filter(item => {
+      return item.count > 0
+    })
+    return {
+      filterItems
+    }
   }
 }
 </script>
