@@ -39,7 +39,7 @@ export default {
   setup(props) {
     const filterItems = computed(() => props.productItems.filter(item => {
       return item.count > 0
-    }))
+    }) || [])
     return {
       filterItems
     }
